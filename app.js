@@ -1,9 +1,12 @@
+// $ ssh mesto@130.193.58.48
+// GET http://130.193.58.48:3000/users
+
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
-const { requestLogger, errorLogger } = require('./middlewares/logger');
+// const { requestLogger, errorLogger } = require('./middlewares/logger');
 
-app.use(logger);
+// app.use(logger);
 
 const PORT = 3000;
 const app = express();
