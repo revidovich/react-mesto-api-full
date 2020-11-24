@@ -1,6 +1,3 @@
-// $ ssh mesto@130.193.58.48
-// GET http://130.193.58.48:3000/users
-
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
@@ -23,7 +20,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); // нет сторонним пакетам
 
-app.use((req, res, next) => { // временно вместо авторизации
+app.use((req, res, next) => { // временно вместо авторизации Удалён хардкод req.user из самостоятельного проекта предыдущих спринтов.
   req.user = { // Во время выполнения роутов объект req.user должен быть инициализирован.
     _id: '5f93590a3ea6942bc8a58414',
   };
@@ -31,5 +28,4 @@ app.use((req, res, next) => { // временно вместо авториза�
 });
 
 app.use(routes);
-// eslint-disable-next-line no-console
 app.listen(PORT, () => console.log(`App listening on port ${PORT}..`));

@@ -9,3 +9,8 @@ DELETE /cards/:cardId/likes — убрать лайк с карточки -->
 ### Как запускать проект:
 `npm run start` для запуска сервера на http://localhost:3000,  
 `npm run dev` откроет в браузере с hot-reload (установите nodemon)  
+
+### Планы:
+Разобраться с "predev": "mongod && npm run dev",
+// $ ssh mesto@130.193.58.48
+// GET http://130.193.58.48:3000/users
