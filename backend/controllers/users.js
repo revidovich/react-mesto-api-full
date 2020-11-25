@@ -66,23 +66,27 @@ const editUserAvatar = async (req, res) => {
       .send({ message: `Ошибка на сервере при патче авы: ${err}` });
   }
 };
-// const createUser = async (req, res) => {
-//   try {
-//     const id = User.countDocuments();
-//     const user = await User.create({ id, ...req.body });
-//     res.status(200).send(user);
-//   } catch (err) {
-//     res.status(400).send({ message: `Невалидный джейсон вызвал ошибку на сервере при записи: ${err}` });
-//   }
-// };
 
 //В контроллере createUser почта и хеш пароля записываются в базу.
 const createUser = (req, res, next) => {
-  const {email, password} = req.body;
-  bcrypt.hash(password, 10)
-    .then((hash) => User.create({ email, password: hash }))
-    .then((_id) => res.status(201).send({ _id, email }))
-    .catch(`ура ${err}`); //(next)????????? anna@ya.ru 111
+  const { email, password } = req.body;
+    if (!email || !password) { // anna@ya.ru 111
+    return res.status(400).send({ message: 'не заполнены поля формы' });
+  }
+  // console.log(`76 тело ${req.body}`)
+  User.findOne({ email })
+  .then((user) => {
+    if (user) {
+      return res.status(409).send({ message: 'Пользователь с таким email уже зарегистрирован'});
+    }
+    return {hash:  bcrypt.hash(password, 10), admin}
+  })
+ // далее - зона безопасной регистрации  .catch(next);
+  .then((hash, admin) =>
+    User.create({ email, password: hash, })
+      .then(user => res.status(201).send({ data: user}))
+      .catch(err => res.status(500).send({ message: 'Произошла ошибка сервера' })))
+    .catch(err => res.status(500).send({ message: 'Произошла ошибка сервера' }))
 };
 
 const login = (req, res) => {
@@ -113,3 +117,10 @@ module.exports = { // контроллер возвращает информац
   editUserAvatar, // редактирование
   login,          // проверяет полученные в теле запроса почту и пароль.
 };
+
+
+// res.status(400). валидейшн эррор или каст эррор
+// res.status(401). нет токена или невалидный пароль
+// res.status(403). обновление чужой инфы - запрещено
+// res.status(404). не найдено по данному айди карточка или пользователь
+// res.status(409). попытка зарегать вторую учётку на то же мыло

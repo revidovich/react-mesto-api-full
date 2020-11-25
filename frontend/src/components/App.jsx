@@ -169,7 +169,7 @@ function App() {
         } else if (err === 401) {
           console.log('Неправильные почта или пароль');
         }
-        console.log('Ошибка: ' + err);
+        console.log('Ошибка логина 172: ' + err);
         setIsSuccess(false)
         setLoggedIn(false)
       })
@@ -181,6 +181,7 @@ function App() {
   function handleRegister(email, password) {
     auth.register(email, password)
       .then(() => {
+    console.log(email, password)
         setIsSuccess(true);
         history.push('/sign-in');
       })
@@ -188,7 +189,7 @@ function App() {
         if (err === 400) {
           console.log('Не передано одно из полей, либо пользователь уже существует');
         }
-        console.log(err); // при регистрации же не может быть 401 ошибки ?
+        console.log('Ошибка регистрации 191: ' + err); // при регистрации же не может быть 401 ошибки ?
         setIsSuccess(false);
       })
       .finally(() =>{

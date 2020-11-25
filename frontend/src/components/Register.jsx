@@ -17,7 +17,7 @@ const Register = (props) => {
 
   function handleSubmit (e) {
     e.preventDefault();
-    props.onRegister(data.email, data.password); //здееееееесь  АААААА!!! у меня пароль и емейл одинаковые были, я и не замечала никогда ошибки )))) спасибо)))))
+    props.onRegister(data.email, data.password);
     setData({email: '', password: ''});
   }
 
@@ -63,5 +63,9 @@ const Register = (props) => {
     </form>
   )
 }
+
+Register.defaultProps = {
+  autoComplete: 'on',
+};
 
 export default Register;

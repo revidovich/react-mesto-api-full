@@ -68,4 +68,8 @@ const Login = (props) => {
   )
 }
 
+Login.defaultProps = {
+  autoComplete: 'on',
+};
+
 export default Login;

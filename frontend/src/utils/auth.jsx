@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://http://localhost:4000';
+export const BASE_URL = 'https://localhost:4000';
 // export const BASE_URL = 'https://auth.nomoreparties.co';
 
 export const register = (email, password) => {

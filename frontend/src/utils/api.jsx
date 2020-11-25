@@ -137,11 +137,11 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+  baseUrl: 'https://localhost:27017/mestodb',
+  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
   headers: {
-      authorization: 'd53467ef-75db-4cf1-9a1c-2d2c544f18c8',
+    authorization: `Bearer ${localStorage.jwt}`,
+    // authorization: 'd53467ef-75db-4cf1-9a1c-2d2c544f18c8',
       'Content-Type': 'application/json'
   }
-})
-
-
+}) // anna@ya.ru 111
