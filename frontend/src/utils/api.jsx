@@ -136,8 +136,7 @@ class Api {
   }
 
   getHeaders() {
-    // const token = getToken();
-    const token = localStorage.getItem('jwt') // Ты когда сохраняешь, называешь token. А когда достаешь, jwt. Надо одинаково.
+    const token = localStorage.getItem('jwt') // const token = getToken();
     return {
       ...this.headers,
       'Authorization': `Bearer ${token}`,

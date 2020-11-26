@@ -15,5 +15,5 @@ POST http://more.students.nomoreparties.xyz:3000/signup
 // anna@ya.ru 111
 https://avatars.mds.yandex.net/get-zen_doc/1653873/pub_5e522780f2bc6f629aeddf7e_5e5231dec0bcaa46a9e767af/scale_1200
 
-anna4@ya.ru
+anna4@ya.ru { _id: '5fbf5917ecc3580ed4f9eca7', iat: 1606411328, exp: 1607016128 }
 https://c-sf.smule.com/rs-s78/arr/b6/b2/b19ff80f-d93b-4f08-8a5f-d6944b637ced.jpg

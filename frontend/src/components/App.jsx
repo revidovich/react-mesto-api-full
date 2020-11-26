@@ -209,9 +209,9 @@ function App() {
   }
 
   function tokenCheck() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      auth.getContent(jwt)
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      auth.getContent(token)
         .then((res) => {
           if (res) {
             setLoggedIn(true);
