@@ -7,18 +7,19 @@ class Api {
     this.headers = headers
   }
 
-  //Написать общие функции для Api.js (запрос, обработка ошибок, и.т.д)_common() {  } ??
+  _processingRes(res) {
+    if (res.ok) {
+      return res.json()
+    } else {
+    return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
+    }
+  }
 
   getInitialItems() {
     return fetch(`${this.baseUrl}/cards`, {
       headers: this.getHeaders(),
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json()//Написать общие функции для Api.js (запрос, обработка ошибок, и.т.д)
-      }
-      return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-    })
+    .then(this._processingRes)
   }
 
   postItem({name, link}) {
@@ -29,12 +30,7 @@ class Api {
         name, link
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-    })
+    .then(this._processingRes)
   }
 
   deleteItem(_id) {
@@ -42,12 +38,7 @@ class Api {
       method: 'DELETE',
       headers: this.getHeaders(),
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-    })
+    .then(this._processingRes)
   }
 
   patchUserAvatar(avatar) {
@@ -56,24 +47,14 @@ class Api {
       headers: this.getHeaders(),
       body: JSON.stringify(avatar)
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-    })
+    .then(this._processingRes)
   }
 
   getUserData() {
-    return fetch(`${this.baseUrl}/users/me`, {
+    return fetch(`${this.baseUrl}/users/me`, { //здесь происходит ошибка
       headers: this.getHeaders(),
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-    })
+    .then(this._processingRes)
   }
 
   patchUserData({name, about}) {
@@ -85,12 +66,7 @@ class Api {
         about
       })
     })
-    .then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-      return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-    })
+    .then(this._processingRes)
   }
 
   putLike(_id) {
@@ -98,12 +74,7 @@ class Api {
         method: 'PUT',
         headers: this.getHeaders(),
       })
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-      })
+      .then(this._processingRes)
   }
 
   deleteLike(_id) {
@@ -111,12 +82,7 @@ class Api {
         method: 'DELETE',
         headers: this.getHeaders(),
       })
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-      })
+      .then(this._processingRes)
   }
 
   changeLikeCardStatus(_id, isLiked) {
@@ -127,27 +93,27 @@ class Api {
           _id
         })
       })
-      .then(res => {
-        if (res.ok) {
-          return res.json()
-        }
-        return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
-      })
+      .then(this._processingRes)
   }
 
   getHeaders() {
-    const token = localStorage.getItem('jwt') // const token = getToken();
+    const token = localStorage.getItem('jwt')
     return {
       ...this.headers,
       'Authorization': `Bearer ${token}`,
     }
+    // return { // const token = getToken();
+    //   "Accept": "application/json",
+    //   "Content-Type": "application/json",
+    //   "Authorization": `Bearer ${localStorage.getItem('jwt')}`
+    // }
   }
 }
 
 export const api = new Api({
   baseUrl: 'http://localhost:3000',
   headers: {
-    // 'Authorization': `Bearer ${token}`,
+    // 'Authorization': `Bearer ${token}`,// anna@ya.ru 111
     'Content-Type': 'application/json'
   }
-}) // anna@ya.ru 111
+})

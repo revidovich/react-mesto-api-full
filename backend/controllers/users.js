@@ -15,9 +15,9 @@ const getCurrentUser = (req, res) => { // здесь юзер.айди
     });
 };
 
-const getUser = async (req, res) => { // здесь парамс.айди
+const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params._id });
+    const user = await User.findOne({ _id: req.params.id }); // здесь парамс.айди   getUserData() {
     if (!user) {
       res.status(404).send({ message: 'Нет пользователя с таким id' });
     } else {
@@ -69,7 +69,7 @@ const editUserAvatar = async (req, res) => {
 //В контроллере createUser почта и хеш пароля записываются в базу.
 const createUser = (req, res, next) => {
   const { email, password } = req.body;
-  if (!email || !password) { 
+  if (!email || !password) {
     return res.status(400).send({ message: 'не заполнены поля формы рег-ции' });
   }
   User
