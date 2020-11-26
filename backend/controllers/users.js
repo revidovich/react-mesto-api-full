@@ -100,6 +100,7 @@ const login = (req, res) => {
       }
       // создадим токен и возвратим его обратно для доступа
       const token = jwtSign(user)
+      console.log(token)
       res.send({ token });
     })
     .catch((err) => {
