@@ -122,7 +122,7 @@ class Api {
   changeLikeCardStatus(_id, isLiked) {
     return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
         method: `${isLiked ? 'PUT' : 'DELETE'}`,
-        headers: this.headers,
+        headers: this.getHeaders(),
         body: JSON.stringify({
           _id
         })
@@ -134,14 +134,20 @@ class Api {
         return Promise.reject(`Ошибка при обращении к серверу: ${res.status}`)
       })
   }
+
+  getHeaders() {
+    const token = getToken(); // тут мы получаем токен из localStorage
+    return {
+      ...this.headers,
+      'Authorization': `Bearer ${token}`,
+    }
+  }
 }
 
 export const api = new Api({
-  baseUrl: 'https://localhost:27017/mestodb',
-  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+  baseUrl: 'http://localhost:3000',
   headers: {
-    authorization: `Bearer ${localStorage.jwt}`,
-    // authorization: 'd53467ef-75db-4cf1-9a1c-2d2c544f18c8',
-      'Content-Type': 'application/json'
+    // 'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
   }
 }) // anna@ya.ru 111
