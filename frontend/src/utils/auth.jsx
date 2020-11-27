@@ -38,7 +38,7 @@ export const authorize = (email, password) => {
 };
 
 export const getContent = (token) => {
-  return fetch(`${BASE_URL}/users/me`, { //здесь наш токен
+  return fetch(`${BASE_URL}/users/me`, { //здесь наш токен отправляется в путь
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -47,9 +47,13 @@ export const getContent = (token) => {
     }
   })
   .then((res) => {
-    if (res.ok) {
-      return res.json();
-    }
-    return Promise.reject(res.status);
+    console.log('Наш респонз от сервера на токен: ' + res);
+    return res.json()
   })
+  // .then((res) => {
+  //   if (res.ok) {
+  //     return res.json();
+  //   }
+  //   return Promise.reject(res.status);
+  // })
 }

@@ -160,6 +160,7 @@ function App() {
       .then((res) => {
         if (res.token) {
           localStorage.setItem('jwt', res.token)
+          console.log('Установил токен ' + res.token);
           setEmail(email)
           setIsSuccess(true)
           setLoggedIn(true)
@@ -186,7 +187,7 @@ function App() {
       .then(() => {
         setIsSuccess(true);
         history.push('/sign-in');
-    console.log('Что выводит зэн?: ' + email + password)
+        console.log('Что выводит зэн?: ' + email + password)
       })
       .catch((err) => {
         if (err === 400) {
@@ -208,11 +209,12 @@ function App() {
     history.push('/sign-in');
   }
 
-  function tokenCheck() {
+  function tokenCheck() { // для того чтобы не регаться каждый раз
     const token = localStorage.getItem('jwt');
+    console.log('tokenCheck, токен: ' + token);
     if (token) {
       auth.getContent(token)
-        .then((res) => {
+        .then((res) => { //res.json()
           if (res) {
             setLoggedIn(true);
             setEmail(res.email);//( res.data.email);
@@ -220,17 +222,18 @@ function App() {
           }
         })
         .catch((err) => {
-          console.log('Ошибка tokenCheck: ' + err);
+          console.log('Ошибка проверки tokenCheck: ' + err);
           setLoggedIn(false);
           setEmail('');
         })
+    } else {
+      console.log('нет токена на tokenCheck: ' + token);
     }
   }
 
   useEffect(() => {
     tokenCheck();
-  }, []);
-
+  }, [localStorage]);
 
 // ----------------------------------------------------------------------------------
   return (

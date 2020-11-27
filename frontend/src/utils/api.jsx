@@ -15,6 +15,13 @@ class Api {
     }
   }
 
+  getUserData() {
+    return fetch(`${this.baseUrl}/users/me`, { //здесь происходит ошибка
+      headers: this.getHeaders(),
+    })
+    .then(this._processingRes)
+  }
+
   getInitialItems() {
     return fetch(`${this.baseUrl}/cards`, {
       headers: this.getHeaders(),
@@ -46,13 +53,6 @@ class Api {
       method: 'PATCH',
       headers: this.getHeaders(),
       body: JSON.stringify(avatar)
-    })
-    .then(this._processingRes)
-  }
-
-  getUserData() {
-    return fetch(`${this.baseUrl}/users/me`, { //здесь происходит ошибка
-      headers: this.getHeaders(),
     })
     .then(this._processingRes)
   }
