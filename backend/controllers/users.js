@@ -17,7 +17,7 @@ const getCurrentUser = (req, res) => { // здесь юзер.айди
 
 const getUser = async (req, res) => {
   try {
-    const user = await User.findOne({ _id: req.params.id }); // здесь парамс.айди   getUserData() {
+    const user = await User.findOne({ _id: req.params.id }); // здесь парамс.айди
     if (!user) {
       res.status(404).send({ message: 'Нет пользователя с таким id' });
     } else {
