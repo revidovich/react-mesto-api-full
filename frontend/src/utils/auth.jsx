@@ -9,7 +9,7 @@ export const register = (email, password) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({email, password})
-  }) //Регистрация создаёт пользователя с емейл и Пароль, 
+  }) //Регистрация создаёт пользователя с емейл и Пароль,
   .then((res) => {
     if (res.ok) {
       console.log(`успешная регистрация, статус ${res.status}`)
@@ -29,13 +29,21 @@ export const authorize = (email, password) => {
     },
     body: JSON.stringify({email, password})
   })
-  .then((res) => {
-    console.log('в authorize в signin до иф: ' + res);
-    if (res.ok) {
-      return res.json();
+  .then((response => response.json()))
+  .then((data) => {
+    if (data.token) {
+        localStorage.setItem('jwt', data.token);
+        return data;
     }
-    return Promise.reject(res.status);
   })
+  .catch(err => console.log(`const authorize ошибка ` + err))
+  // .then((res) => {
+  //   console.log('в authorize в signin до иф: ' + res);
+  //   if (res.ok) {
+  //     return res.json();
+  //   }
+  //   return Promise.reject(res.status);
+  // })
 };
 
 export const getContent = (token) => {
@@ -48,7 +56,7 @@ export const getContent = (token) => {
     }
   })
   .then((res) => {
-    console.log('Наш респонз от сервера на токен: ' + res);
+    console.log('Обновили инфу: ' + res);
     return res.json()
   })
   // .then((res) => {

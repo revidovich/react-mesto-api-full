@@ -36,17 +36,19 @@ function App() {
 // ----------------------------------------------------------------------------------
 
   useEffect(() => {
-    Promise.all([
-      api.getUserData(),
-      api.getInitialItems()
-    ])
-    .then(([userInfo, cards]) => {
-      setCurrentUser(userInfo);
-      setCards(cards);
-    })
-    .catch((err) => {
-      console.log('Ошибка Promise.all при loggedIn: ' + err);
-    });
+    if (loggedIn) {
+      Promise.all([
+        api.getUserData(),
+        api.getInitialItems()
+      ])
+      .then(([userInfo, cards]) => {
+        setCurrentUser(userInfo);
+        setCards(cards);
+      })
+      .catch((err) => {
+        console.log('Ошибка Promise.all при loggedIn: ' + err);
+      });
+    }
   }, [loggedIn]);  // }, []);
 
   useEffect(() => {
@@ -217,14 +219,14 @@ function App() {
         .then((res) => { //res.json()
           if (res) {
             setLoggedIn(true);
-            setEmail(res.email);//( res.data.email);
+            setEmail(res.email);
             history.push('/');
           }
         })
         .catch((err) => {
           console.log('Ошибка проверки tokenCheck: ' + err);
           setLoggedIn(false);
-          setEmail(''); //скорее всего зря....
+          setEmail('');
         })
     } else {
       console.log('нет токена на tokenCheck: ' + token);
