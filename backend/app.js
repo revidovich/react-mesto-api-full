@@ -32,7 +32,7 @@ app.use((err, req, res, next) => {
     res.status(err.status).send({ message: err.message });
     return;
   }
-  res.status(500).send({ message: `Сервер пятисотит` });
+  res.status(500).send({ message: err.message });
   next(); // дальше нет ничего
 });
 

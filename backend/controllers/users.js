@@ -78,6 +78,15 @@ const getUsers = async (req, res) => {
 //     res.status(400).send({ message: `Ошибка на сервере при патче: ${err}` });
 //   }
 // };
+// const editUser = async (req, res, next) => {
+//   try {
+//     const { name, about } = req.body;
+//     const newUser = await User.findByIdAndUpdate({ _id: req.user._id }, { name, about } )
+//     res.send(newUser) //да что ж такое!
+//   } catch(err){
+//     next(err)
+//   }
+// }
 const editUser = (req, res, next) => {
   const { name, about } = req.body;
   User.findByIdAndUpdate({ _id: req.user._id }, { name, about } )

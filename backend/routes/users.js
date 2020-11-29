@@ -18,8 +18,6 @@ userRouter.get('/users/:_id', celebrate({
   }),
 }), getUser);
 
-// userRouter.get('/users/`${:_id}`', getUser);
-
 userRouter.patch('/users/me', celebrate({
   body: Joi.object().keys({
     name: Joi.string().required().min(2).max(30),
@@ -31,6 +29,6 @@ userRouter.patch('/users/me/avatar', celebrate({
   body: Joi.object().keys({
     avatar: Joi.string().required().regex(/^http[s]?:\/\/\w+/),
   }),
-}), editUserAvatar);//залогиненном пользователе
+}), editUserAvatar);
 
 module.exports = userRouter;
