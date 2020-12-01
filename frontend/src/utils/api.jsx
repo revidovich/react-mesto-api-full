@@ -102,11 +102,6 @@ class Api {
       ...this.headers,
       'Authorization': `Bearer ${token}`,
     }
-    // return { // const token = getToken();
-    //   "Accept": "application/json",
-    //   "Content-Type": "application/json",
-    //   "Authorization": `Bearer ${localStorage.getItem('jwt')}`
-    // }
   }
 }
 

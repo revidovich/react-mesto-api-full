@@ -35,7 +35,7 @@ const userSchema = new mongoose.Schema({
       message: 'Неправильный формат почты',
     },
   },
-  password: { // здесь неясно что писать ваще
+  password: {
     type: String,
     required: true,
     select: false,
