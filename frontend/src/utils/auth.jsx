@@ -1,6 +1,6 @@
 export const BASE_URL = 'http://localhost:3000';
 // export const BASE_URL = 'https://api.more.students.nomoreparties.xyz';
-
+ //Регистрация создаёт пользователя с емейл и Пароль,
 export const register = (email, password) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
@@ -9,13 +9,13 @@ export const register = (email, password) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({email, password})
-  }) //Регистрация создаёт пользователя с емейл и Пароль,
+  })
   .then((res) => {
     if (res.ok) {
-      console.log(`успешная регистрация, статус ${res.status}`)
+      console.log(`${res.status}`)
       return res.json();
     }
-    console.log(`к сожалению у вас реджект, ошибка ${res.status}`)
+    console.log(`${res.status}`)
     return Promise.reject(res.status);
   })
 };
@@ -36,18 +36,11 @@ export const authorize = (email, password) => {
         return data;
     }
   })
-  .catch(err => console.log(`const authorize ошибка ` + err))
-  // .then((res) => {
-  //   console.log('в authorize в signin до иф: ' + res);
-  //   if (res.ok) {
-  //     return res.json();
-  //   }
-  //   return Promise.reject(res.status);
-  // })
+  .catch(err => console.log(err))
 };
 
 export const getContent = (token) => {
-  return fetch(`${BASE_URL}/users/me`, { //здесь наш токен отправляется в путь
+  return fetch(`${BASE_URL}/users/me`, {
     method: 'GET',
     headers: {
       'Accept': 'application/json',
@@ -56,13 +49,10 @@ export const getContent = (token) => {
     }
   })
   .then((res) => {
-    console.log('Обновили инфу: ' + res);
-    return res.json()
+    if (res.ok) {
+      return res.json();
+    }
+    return Promise.reject(res.status);
   })
-  // .then((res) => {
-  //   if (res.ok) {
-  //     return res.json();
-  //   }
-  //   return Promise.reject(res.status);
-  // })
+  .catch(err => console.log(err))
 }

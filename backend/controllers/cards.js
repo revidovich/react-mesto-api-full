@@ -55,9 +55,58 @@ const getCardById = (req, res, next) => {
     .catch(next);
 };
 
+// const likeCard = (req, res, next) => { // /cards/likes/:_id
+//   Card.findByIdAndUpdate(req.params._id, { likes: req.user._id }, { new: true })
+//     .then((card) => {
+//       // console.log(req)
+//       if (!card) {
+//         throw new NotFoundError('Нет карточки с таким id');
+//       }
+//       return res.send(card);
+//     })
+//     .catch(next);
+// };
+
+const likeCard = (req, res, next) => {
+  Card.findByIdAndUpdate(req.params._id, { $addToSet: { likes: req.user._id } }, { new: true })
+    .orFail(new NotFoundError('Нет карточки с таким id'))
+    .then((card) => {
+      res.send(card);
+    })
+    .catch(next);
+};
+
+const dislikeCard = (req, res, next) => {
+  Card.findByIdAndUpdate(
+    req.params._id,
+    { $pull: { likes: req.user._id } },
+    { new: true },
+  )
+    .orFail(new NotFoundError('Нет карточки с таким id'))
+    .then((cards) => {
+      res.send(cards);
+    })
+    .catch(next);
+};
+
+// // Card это объект {"likes":[],"createdAt":"2020-12-02T15:57:41.604Z","_id":"5fc7e7c1949d1604686b7b18","name":"pictures","link":"https://pictures.s3.yandex.net/frontend-developer/cards-compressed/tulinovka.jpg","owner":"5fbe60db589d5f1f4cbc748a","__v":0}
+
+// const dislikeCard = (req, res, next) => {
+//   Card.update(req.params._id, { likes: 'req.user._id' }, { likes: '' })
+//     .then((card) => {
+//       if (!card) {
+//         throw new NotFoundError('Нет карточки с таким id');
+//       }
+//       return res.send(card);
+//     })
+//     .catch(next);
+// };
+
 module.exports = {
   getCards,
   postCard,
   deleteCard,
   getCardById,
+  likeCard,
+  dislikeCard,
 };

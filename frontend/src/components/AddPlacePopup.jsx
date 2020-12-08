@@ -3,10 +3,7 @@ import PopupWithForm from './PopupWithForm';
 
 function AddPlacePopup({ isOpen, onClose, onAddCard }) {
 
-  const [form, setForm] = useState({
-    name: '',
-    link: ''
-  });
+  const [form, setForm] = useState({name: '', link: ''});
 
   useEffect(() => {
   if (isOpen === true) {

@@ -5,6 +5,8 @@ const {
   getCardById,
   postCard,
   deleteCard,
+  likeCard,
+  dislikeCard,
 } = require('../controllers/cards.js');
 
 cardsRouter.get('/cards', getCards);
@@ -28,16 +30,16 @@ cardsRouter.delete('/cards/:_id', celebrate({
   }),
 }), deleteCard);
 
-// cardsRouter.put('/:_id/likes', celebrate({
-//   params: Joi.object().keys({
-//     _id: Joi.string().hex(),
-//   }),
-// }), likeCard); - на будущее
+cardsRouter.put('/cards/likes/:_id', celebrate({
+  params: Joi.object().keys({
+    _id: Joi.string().hex(),
+  }),
+}), likeCard);
 
-// cardsRouter.delete('/:_id/likes', celebrate({
-//   params: Joi.object().keys({
-//     _id: Joi.string().hex(),
-//   }),
-// }), dislikeCard);
+cardsRouter.delete('/cards/likes/:_id', celebrate({
+  params: Joi.object().keys({
+    _id: Joi.string().hex(),
+  }),
+}), dislikeCard);
 
 module.exports = cardsRouter;

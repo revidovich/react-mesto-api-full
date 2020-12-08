@@ -43,7 +43,7 @@ function App() {
       ])
       .then(([userInfo, cards]) => {
         setCurrentUser(userInfo);
-        setCards(cards);
+        setCards(cards.reverse());
       })
       .catch((err) => {
         console.log('Ошибка Promise.all при loggedIn: ' + err);
@@ -131,7 +131,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => {
-        console.log(`${err}`);
+        console.log(`не создается карточка ${err}`);
       });
   }
   function handleCardLike(card) {
@@ -140,10 +140,10 @@ function App() {
       .changeLikeCardStatus(card._id, !isLiked)
       .then((newCard) => {
         const newCards = cards.map((c) => (c._id === card._id ? newCard : c));
-        setCards(newCards);//С лайками - там нужно id лайка везде удалить и заработает
+        setCards(newCards);
       })
       .catch((err) => {
-        console.log(`${err}`);
+        console.log(`не ставится лайк ${err}`);
       });
   }
   function handleCardDelete(card) {

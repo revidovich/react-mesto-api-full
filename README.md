@@ -1,4 +1,4 @@
-# [Веб-приложение "Место"](https://nutkatuz.github.io/react-mesto-auth/ "Ссылка на GhP")
+# [Веб-приложение "Место"](https://more.students.nomoreparties.xyz "Ссылка на сайт")
 
 ### Описание проекта
 Ссылка на сайт: https://more.students.nomoreparties.xyz

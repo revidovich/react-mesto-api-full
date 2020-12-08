@@ -38,9 +38,3 @@ const cardSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('card', cardSchema);
-
-// {"likes":[],
-// "createdAt":"2019-07-06T12:10:29.149Z",
-// "_id":"5f9345414e00502fbc735b02",
-// "name":"Иваново",
-// "link":"https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg"}

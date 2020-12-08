@@ -5,7 +5,7 @@ const NotFoundError = require('../errors/NotFoundError');
 const ValidationError = require('../errors/ValidationError');
 const ConflictError = require('../errors/ConflictError');
 
-const getCurrentUser = (req, res, next) => { // здесь юзер.айди
+const getCurrentUser = (req, res, next) => {
   const { _id } = req.user;
   return User.findOne({ _id })
     .then((user) => {
@@ -37,7 +37,7 @@ const getUsers = async (req, res, next) => {
 
 const editUser = (req, res, next) => {
   const { name, about } = req.body;
-  User.findByIdAndUpdate({ _id: req.user._id }, { name, about })
+  User.findByIdAndUpdate({ _id: req.user._id }, { name, about }, { new: true })
     .orFail(() => new NotFoundError({ message: 'Нет пользователя с таким id' }))
     .catch(() => {
       throw new ValidationError({ message: 'Указаны некорректные данные' });
@@ -48,10 +48,7 @@ const editUser = (req, res, next) => {
 
 const editUserAvatar = (req, res, next) => {
   const { avatar } = req.body;
-  User.findByIdAndUpdate(
-    { _id: req.user._id },
-    { avatar },
-  )
+  User.findByIdAndUpdate({ _id: req.user._id }, { avatar }, { new: true })
     .orFail(() => new NotFoundError({ message: 'Нет пользователя с таким id' }))
     .catch(() => {
       throw new ValidationError({ message: 'Указаны некорректные данные' });
@@ -72,8 +69,9 @@ const createUser = (req, res, next) => {
       if (user) {
         return next(new ConflictError('Пользователь с таким email уже зарегистрирован'));
       }
-      return bcrypt.hash(password, 10);
-    })
+      return bcrypt.hash(password, 10); // вернуть результат исполнения bycrypt
+      // через return из одного then
+    }) // и получить его в следующем then и там дальше обработать
     .then((hash) => User.create({ email, password: hash })
       .then(({ _id }) => res.status(200).send({ email, _id })))
     .catch(next);

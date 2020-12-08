@@ -16,15 +16,15 @@ class Api {
   }
 
   getUserData() {
-    return fetch(`${this.baseUrl}/users/me`, { //здесь происходит ошибка
-      headers: this.getHeaders(),
+    return fetch(`${this.baseUrl}/users/me`, {
+      headers: this._getHeaders(),
     })
     .then(this._processingRes)
   }
 
   getInitialItems() {
     return fetch(`${this.baseUrl}/cards`, {
-      headers: this.getHeaders(),
+      headers: this._getHeaders(),
     })
     .then(this._processingRes)
   }
@@ -32,7 +32,7 @@ class Api {
   postItem({name, link}) {
     return fetch(`${this.baseUrl}/cards`, {
       method: 'POST',
-      headers: this.getHeaders(),
+      headers: this._getHeaders(),
       body: JSON.stringify({
         name, link
       })
@@ -43,7 +43,7 @@ class Api {
   deleteItem(_id) {
     return fetch(`${this.baseUrl}/cards/${_id}`, {
       method: 'DELETE',
-      headers: this.getHeaders(),
+      headers: this._getHeaders(),
     })
     .then(this._processingRes)
   }
@@ -51,7 +51,7 @@ class Api {
   patchUserAvatar(avatar) {
     return fetch(`${this.baseUrl}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this.getHeaders(),
+      headers: this._getHeaders(),
       body: JSON.stringify(avatar)
     })
     .then(this._processingRes)
@@ -60,7 +60,7 @@ class Api {
   patchUserData({name, about}) {
     return fetch(`${this.baseUrl}/users/me`, {
       method: 'PATCH',
-      headers: this.getHeaders(),
+      headers: this._getHeaders(),
       body: JSON.stringify({
         name,
         about
@@ -69,26 +69,10 @@ class Api {
     .then(this._processingRes)
   }
 
-  putLike(_id) {
-    return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
-        method: 'PUT',
-        headers: this.getHeaders(),
-      })
-      .then(this._processingRes)
-  }
-
-  deleteLike(_id) {
-    return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
-        method: 'DELETE',
-        headers: this.getHeaders(),
-      })
-      .then(this._processingRes)
-  }
-
   changeLikeCardStatus(_id, isLiked) {
-    return fetch(`${this.baseUrl}/cards/likes/${_id}`, {
+    return fetch(`${this.baseUrl}/cards/${_id}/likes`, {
         method: `${isLiked ? 'PUT' : 'DELETE'}`,
-        headers: this.getHeaders(),
+        headers: this._getHeaders(),
         body: JSON.stringify({
           _id
         })
@@ -96,8 +80,8 @@ class Api {
       .then(this._processingRes)
   }
 
-  getHeaders() {
-    const token = localStorage.getItem('jwt') // надо каждый раз брать его оттуда
+  _getHeaders() {
+    const token = localStorage.getItem('jwt')
     return {
       ...this.headers,
       'Authorization': `Bearer ${token}`,
@@ -109,7 +93,6 @@ export const api = new Api({
   baseUrl: 'http://localhost:3000',
   // baseUrl: 'https://api.more.students.nomoreparties.xyz',
   headers: {
-    // 'Authorization': `Bearer ${token}`,// anna@ya.ru 111
     'Content-Type': 'application/json'
   }
 })
