@@ -65,17 +65,31 @@ const getCardById = (req, res, next) => {
 //       return res.send(card);
 //     })
 //     .catch(next);
+// }; мой айдишник user 5fbe60db589d5f1f4cbc748a
+
+// const likeCard = (req, res, next) => {
+//   console.log(req.user);
+//   Card.findByIdAndUpdate(req.params._id, { $addToSet: { likes: req.user._id } }, { new: true })
+//     .orFail(new NotFoundError('Нет карточки с таким id'))
+//     .then((card) => {
+//       res.status(200).send(card);
+//     })
+//     .catch(next);
 // };
 
-const likeCard = (req, res, next) => {
-  Card.findByIdAndUpdate(req.params._id, { $addToSet: { likes: req.user._id } }, { new: true })
-    .orFail(new NotFoundError('Нет карточки с таким id'))
-    .then((card) => {
-      res.send(card);
-    })
-    .catch(next);
+const likeCard = async (req, res, next) => {
+  try {
+    const likedCard = await Card.findByIdAndUpdate(
+      req.params._id,
+      { $addToSet: { likes: req.user._id } },
+      { new: true },
+    );
+    if (!likedCard) throw new NotFoundError('Карточка не найдена');
+    res.status(200).send(likedCard);
+  } catch (error) {
+    next(error);
+  }
 };
-
 const dislikeCard = (req, res, next) => {
   Card.findByIdAndUpdate(
     req.params._id,
